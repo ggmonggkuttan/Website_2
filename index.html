@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Honeybee Driving School — Modern Lessons with a Honeycomb Flair</title>
-  <meta name="description" content="Honeybee Driving School — modern lessons, friendly instructors, and transparent pricing in GBP. Book single lessons, bundles, and intensive courses." />
+  <meta name="description" content="Honeybee Driving School — modern lessons, friendly instructors, and transparent pricing. Book single lessons, bundles, and intensive courses." />
 
   <!-- Tailwind CSS (CDN) -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -81,20 +81,6 @@
       animation: float-honeycomb 8s ease-in-out infinite;
     }
 
-    /* Mobile menu fixes */
-    #mobile-menu {
-      background-color: #0B0F14 !important;
-      backdrop-filter: none !important;
-    }
-    
-    #mobile-menu * {
-      background-color: #0B0F14 !important;
-    }
-    
-    #mobile-menu.open {
-      background-color: #0B0F14 !important;
-    }
-
     /* Fancy underline for section headings */
     .bee-underline {
       position: relative;
@@ -129,6 +115,49 @@
       75% { transform: translate(-6px,0) rotate(3deg); }
     }
     .buzz { animation: buzz 5s ease-in-out infinite; }
+
+    /* Mobile-specific optimizations */
+    @media (max-width: 640px) {
+      /* Better touch targets */
+      .lift:hover { transform: none; }
+      
+      /* Optimize text sizes for mobile */
+      .text-4xl { font-size: 1.875rem; line-height: 2.25rem; }
+      
+      /* Better spacing for mobile */
+      .py-16 { padding-top: 3rem; padding-bottom: 3rem; }
+      .py-24 { padding-top: 4rem; padding-bottom: 4rem; }
+      
+      /* Optimize honeycomb elements for mobile */
+      .honeycomb-hex {
+        display: none;
+      }
+      
+      /* Better button sizing for mobile */
+      .px-5 { padding-left: 1.25rem; padding-right: 1.25rem; }
+      .py-3 { padding-top: 0.875rem; padding-bottom: 0.875rem; }
+    }
+
+    /* Improve mobile form experience */
+    @media (max-width: 640px) {
+      input, select, textarea {
+        font-size: 16px !important; /* Prevents zoom on iOS */
+      }
+      
+      /* Better mobile button sizing */
+      button, .btn {
+        min-height: 44px; /* Apple's recommended touch target size */
+      }
+    }
+
+    /* FAQ dropdown animations */
+    details[open] summary svg {
+      transform: rotate(180deg);
+    }
+    
+    details summary svg {
+      transition: transform 0.3s ease;
+    }
   </style>
 </head>
 
@@ -144,16 +173,18 @@
   <header class="relative z-10">
     <nav class="mx-auto max-w-7xl px-6 lg:px-8 py-5 flex items-center justify-between">
       <a href="#" class="flex items-center gap-3 group">
-        <!-- Bee mark -->
-        <span class="relative inline-flex items-center justify-center w-10 h-10 rounded-full bg-honey-500/15 ring-1 ring-honey-500/20 group-hover:ring-honey-400/30 transition">
-          <svg aria-hidden="true" viewBox="0 0 64 64" class="w-6 h-6 text-honey-400">
-            <path fill="currentColor" d="M42 18c4 0 8 3 8 8s-4 9-8 9c-1 0-2 0-3 0-2 5-7 9-13 9-8 0-14-6-14-14s6-14 14-14c4 0 8 2 10 6 1 0 2-1 4-1zm-20 6c-4 0-7 3-7 7s3 7 7 7 7-3 7-7-3-7-7-7z"/>
-            <rect x="39" y="10" width="4" height="12" rx="2" fill="currentColor" class="opacity-70"/>
-            <rect x="35" y="12" width="4" height="12" rx="2" fill="currentColor" class="opacity-60"/>
-            <rect x="31" y="14" width="4" height="12" rx="2" fill="currentColor" class="opacity-50"/>
+        <!-- Simple hexagon logo -->
+        <span class="relative inline-flex items-center justify-center w-10 h-10">
+          <svg viewBox="0 0 24 24" class="w-8 h-8 text-honey-400 group-hover:text-honey-300 transition-colors duration-200">
+            <path fill="currentColor" d="M12 2L22 8.5V15.5L12 22L2 15.5V8.5L12 2Z"/>
+            <path fill="currentColor" d="M12 6L18 9.5V13.5L12 17L6 13.5V9.5L12 6Z" class="opacity-60"/>
+            <circle cx="12" cy="12" r="2" fill="currentColor" class="opacity-80"/>
           </svg>
         </span>
-        <span class="text-lg font-semibold tracking-tight">Honeybee</span>
+        <!-- Clean company name -->
+        <span class="text-2xl font-bold tracking-wide">
+          <span class="text-white group-hover:text-honey-300 transition-colors duration-200">Honey</span><span class="text-yellow-400 group-hover:text-yellow-300 transition-colors duration-200">bee</span>
+        </span>
       </a>
 
       <div class="hidden md:flex items-center gap-8">
@@ -169,34 +200,50 @@
       </div>
 
       <!-- Mobile menu button -->
-      <button id="mobile-menu-btn" aria-label="Open menu" class="md:hidden inline-flex p-2 rounded-lg ring-1 ring-white/10 hover:bg-white/10 transition-colors">
+      <button id="mobile-menu-btn" class="md:hidden inline-flex p-2 rounded-lg bg-white/10 ring-1 ring-white/20 hover:bg-white/20 transition-colors">
         <svg id="menu-icon" class="w-6 h-6" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16"/></svg>
+        <svg id="close-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
       </button>
     </nav>
-    
-    <!-- Mobile Menu Overlay -->
-    <div id="mobile-menu" class="md:hidden fixed inset-0 bg-charcoal z-[99999] transform translate-x-full transition-transform duration-300 ease-in-out" style="background-color: #0B0F14 !important;">
-      <div class="flex flex-col h-full" style="background-color: #0B0F14 !important;">
-        <div class="flex justify-between items-center p-6 border-b border-white/10" style="background-color: #0B0F14 !important;">
-          <span class="text-lg font-semibold text-white">Menu</span>
-          <button id="close-menu" class="p-2 rounded-lg ring-1 ring-white/10 hover:bg-white/10 transition-colors">
-            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+  </header>
+
+  <!-- Mobile menu overlay -->
+  <div id="mobile-menu-overlay" class="fixed inset-0 bg-black/80 z-40 hidden md:hidden">
+    <div class="absolute top-0 right-0 w-80 h-full bg-charcoal shadow-2xl transform translate-x-full transition-transform duration-300">
+      <div class="p-6 space-y-4">
+        <div class="flex justify-between items-center mb-6">
+          <div class="flex items-center gap-3">
+            <span class="w-8 h-8 grid place-items-center">
+              <svg class="w-6 h-6 text-honey-400" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2L22 8.5V15.5L12 22L2 15.5V8.5L12 2Z"/>
+                <path d="M12 6L18 9.5V13.5L12 17L6 13.5V9.5L12 6Z" class="opacity-60"/>
+                <circle cx="12" cy="12" r="2" class="opacity-80"/>
+              </svg>
+            </span>
+            <span class="text-xl font-bold tracking-wide">
+              <span class="text-white">Honey</span><span class="text-yellow-400">bee</span>
+            </span>
+          </div>
+          <button id="close-mobile-menu" class="p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
           </button>
         </div>
-        <nav class="flex-1 px-6 py-8" style="background-color: #0B0F14 !important;">
-          <div class="space-y-6">
-            <a href="#features" class="block text-xl font-medium text-white/80 hover:text-white transition-colors">Features</a>
-            <a href="#pricing" class="block text-xl font-medium text-white/80 hover:text-white transition-colors">Pricing</a>
-            <a href="#instructors" class="block text-xl font-medium text-white/80 hover:text-white transition-colors">Instructors</a>
-            <a href="#contact" class="block text-xl font-medium text-white/80 hover:text-white transition-colors">Contact</a>
-          </div>
-          <div class="mt-8 pt-8 border-t border-white/10 space-y-4">
-            <a href="#pricing" class="block w-full px-4 py-3 rounded-lg bg-white/5 hover:bg-white/10 ring-1 ring-white/10 text-center transition-colors">View Prices</a>
-            <a href="#booking" class="block w-full px-4 py-3 rounded-lg bg-honey-500 hover:bg-honey-400 text-charcoal font-semibold shadow-glow text-center transition-colors">Book Now</a>
-          </div>
+        
+        <nav class="space-y-2">
+          <a href="#features" class="block px-4 py-3 rounded-lg text-white/80 hover:text-white hover:bg-white/10 transition-colors">Features</a>
+          <a href="#pricing" class="block px-4 py-3 rounded-lg text-white/80 hover:text-white hover:bg-white/10 transition-colors">Pricing</a>
+          <a href="#instructors" class="block px-4 py-3 rounded-lg text-white/80 hover:text-white hover:bg-white/10 transition-colors">Instructors</a>
+          <a href="#contact" class="block px-4 py-3 rounded-lg text-white/80 hover:text-white hover:bg-white/10 transition-colors">Contact</a>
         </nav>
+        
+        <div class="pt-4 border-t border-white/10 space-y-2">
+          <a href="#pricing" class="block px-4 py-3 rounded-lg text-white/80 hover:text-white hover:bg-white/10 transition-colors">View Prices</a>
+          <a href="#booking" class="block px-4 py-3 rounded-lg bg-honey-500 hover:bg-honey-400 text-charcoal font-semibold text-center">Book Now</a>
+        </div>
       </div>
     </div>
+  </div>
+    </nav>
   </header>
 
   <!-- Hero -->
@@ -222,7 +269,7 @@
           Master the road with <span class="text-honey-400">confidence</span> and style.
         </h1>
         <p class="mt-5 text-white/80 max-w-xl">
-          Learn confidently with Honeybee — flexible scheduling, dual-control cars, and clear pricing in GBP. From first drive to test day, we’ve got you.
+          Learn confidently with Honeybee — flexible scheduling, dual-control cars, and clear pricing. From first drive to test day, we’ve got you.
         </p>
 
         <div class="mt-8 flex flex-wrap gap-3">
@@ -370,10 +417,10 @@
     <div class="honeycomb-hex top-32 left-12 float-honeycomb" style="animation-delay: 3s;"></div>
     
     <div class="mx-auto max-w-7xl px-6 lg:px-8 py-16">
-      <h2 class="text-2xl sm:text-3xl font-bold bee-underline">Transparent pricing (GBP)</h2>
+      <h2 class="text-2xl sm:text-3xl font-bold bee-underline">Transparent pricing</h2>
       <p class="mt-3 text-white/70">No surprises — what you see is what you pay. Test-day car hire available.</p>
 
-      <div class="mt-10 grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
         <!-- Card 1 -->
         <div class="rounded-2xl bg-white/5 ring-1 ring-white/10 p-6 flex flex-col lift">
           <h3 class="text-lg font-semibold">Pay-As-You-Go</h3>
@@ -447,7 +494,7 @@
 
       <p class="mt-6 text-sm text-white/60">
         *Prices include VAT. Test fees (theory £23/practical £62) not included. Car hire on test day: <span class="text-white">£85</span>. 
-        <br>All prices valid until 31st December 2024. Payment plans available.
+        <br>All prices valid until 31st December 2025. Payment plans available.
       </p>
     </div>
   </section>
@@ -541,37 +588,43 @@
       </div>
 
       <form id="contact" class="rounded-2xl bg-white/5 ring-1 ring-white/10 p-6 space-y-4">
-        <div class="grid sm:grid-cols-2 gap-4">
-          <label class="block">
-            <span class="text-sm text-white/80">Full name</span>
-            <input type="text" required placeholder="Alex Smith"
-              class="mt-1 w-full rounded-lg bg-charcoal/60 ring-1 ring-white/10 px-3 py-2 placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-honey-500" />
-          </label>
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <label class="block">
+              <span class="text-sm text-white/80">Full name</span>
+              <input type="text" required placeholder="Alex Smith"
+                class="mt-1 w-full rounded-lg bg-charcoal/60 ring-1 ring-white/10 px-4 py-3 placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-honey-500 text-base" />
+            </label>
+            <label class="block">
+              <span class="text-sm text-white/80">Phone number</span>
+              <input type="tel" required placeholder="07700 900000"
+                class="mt-1 w-full rounded-lg bg-charcoal/60 ring-1 ring-white/10 px-4 py-3 placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-honey-500 text-base" />
+            </label>
+          </div>
+
           <label class="block">
             <span class="text-sm text-white/80">Email</span>
             <input type="email" required placeholder="you@example.com"
-              class="mt-1 w-full rounded-lg bg-charcoal/60 ring-1 ring-white/10 px-3 py-2 placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-honey-500" />
+              class="mt-1 w-full rounded-lg bg-charcoal/60 ring-1 ring-white/10 px-4 py-3 placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-honey-500 text-base" />
           </label>
-        </div>
 
         <label class="block">
           <span class="text-sm text-white/80">Preferred transmission</span>
-          <select class="mt-1 w-full rounded-lg bg-charcoal/60 ring-1 ring-white/10 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-honey-500">
+          <select class="mt-1 w-full rounded-lg bg-charcoal/60 ring-1 ring-white/10 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-honey-500 text-base">
             <option>Manual</option>
             <option>Automatic</option>
             <option>Either</option>
           </select>
         </label>
 
-        <div class="grid sm:grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <label class="block">
             <span class="text-sm text-white/80">Postcode</span>
             <input type="text" placeholder="e.g. SW1A 1AA"
-              class="mt-1 w-full rounded-lg bg-charcoal/60 ring-1 ring-white/10 px-3 py-2 placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-honey-500" />
+              class="mt-1 w-full rounded-lg bg-charcoal/60 ring-1 ring-white/10 px-4 py-3 placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-honey-500 text-base" />
           </label>
           <label class="block">
             <span class="text-sm text-white/80">Preferred times</span>
-            <select class="mt-1 w-full rounded-lg bg-charcoal/60 ring-1 ring-white/10 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-honey-500">
+            <select class="mt-1 w-full rounded-lg bg-charcoal/60 ring-1 ring-white/10 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-honey-500 text-base">
               <option>Weekdays</option>
               <option>Evenings</option>
               <option>Weekends</option>
@@ -583,10 +636,10 @@
         <label class="block">
           <span class="text-sm text-white/80">Message</span>
           <textarea rows="4" placeholder="Tell us about your goals and availability…"
-            class="mt-1 w-full rounded-lg bg-charcoal/60 ring-1 ring-white/10 px-3 py-2 placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-honey-500"></textarea>
+            class="mt-1 w-full rounded-lg bg-charcoal/60 ring-1 ring-white/10 px-4 py-3 placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-honey-500 text-base"></textarea>
         </label>
 
-        <button type="submit" class="w-full px-4 py-3 rounded-xl bg-honey-500 hover:bg-honey-400 text-charcoal font-semibold shadow-glow">Request Callback</button>
+        <button type="submit" class="w-full px-6 py-4 rounded-xl bg-honey-500 hover:bg-honey-400 text-charcoal font-semibold shadow-glow text-base">Request Callback</button>
         <p class="text-xs text-white/60">By submitting, you consent to being contacted about lessons. We’ll never share your details.</p>
       </form>
     </div>
@@ -596,30 +649,45 @@
   <section class="relative z-10 border-t border-white/10 bg-white/[.02]">
     <div class="mx-auto max-w-7xl px-6 lg:px-8 py-16">
       <h2 class="text-2xl sm:text-3xl font-bold bee-underline">FAQs</h2>
-      <div class="mt-8 grid md:grid-cols-2 gap-6">
-        <details class="rounded-2xl bg-white/5 ring-1 ring-white/10 p-5">
-          <summary class="cursor-pointer font-semibold">How many lessons will I need?</summary>
-          <p class="mt-2 text-white/80 text-sm">Most learners need 30-45 hours. Our structured approach typically gets students test-ready in 35-40 hours. We assess progress every 10 lessons.</p>
-        </details>
-        <details class="rounded-2xl bg-white/5 ring-1 ring-white/10 p-5">
-          <summary class="cursor-pointer font-semibold">Do you pick up from home or work?</summary>
-          <p class="mt-2 text-white/80 text-sm">Yes — we pick up from home, work, or any convenient location within our service area (Central London, North London, and surrounding areas).</p>
-        </details>
-        <details class="rounded-2xl bg-white/5 ring-1 ring-white/10 p-5">
-          <summary class="cursor-pointer font-semibold">Is the test fee included?</summary>
-          <p class="mt-2 text-white/80 text-sm">Test fees are paid directly to the DVSA (Theory: £23, Practical: £62). Our prices cover tuition and car hire options. We can help you book your test.</p>
-        </details>
-        <details class="rounded-2xl bg-white/5 ring-1 ring-white/10 p-5">
-          <summary class="cursor-pointer font-semibold">Do you offer gift vouchers?</summary>
-          <p class="mt-2 text-white/80 text-sm">Yes — contact us and we’ll arrange a digital voucher in GBP.</p>
-        </details>
-        <details class="rounded-2xl bg-white/5 ring-1 ring-white/10 p-5">
-          <summary class="cursor-pointer font-semibold">What areas do you cover?</summary>
-          <p class="mt-2 text-white/80 text-sm">We serve Central London, North London, and surrounding areas including Islington, Camden, Westminster, and parts of Hackney and Haringey.</p>
-        </details>
-        <details class="rounded-2xl bg-white/5 ring-1 ring-white/10 p-5">
-          <summary class="cursor-pointer font-semibold">Do you offer payment plans?</summary>
-          <p class="mt-2 text-white/80 text-sm">Yes, we offer flexible payment plans for bundles and intensive courses. Contact us to discuss options that work for your budget.</p>
+      <div class="mt-8 max-w-4xl mx-auto">
+        <details class="group rounded-2xl bg-white/5 ring-1 ring-white/10 overflow-hidden">
+          <summary class="cursor-pointer p-6 flex items-center justify-between hover:bg-white/5 transition-colors">
+            <span class="text-lg font-semibold text-white">Frequently Asked Questions</span>
+            <svg class="w-6 h-6 text-honey-400 transition-transform duration-300 group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </summary>
+          <div class="px-6 pb-6 space-y-6">
+            <div class="pt-4 border-t border-white/10">
+              <h4 class="font-semibold text-white mb-2">How many lessons will I need?</h4>
+              <p class="text-white/80 text-sm leading-relaxed">Most learners need 30-45 hours. Our structured approach typically gets students test-ready in 35-40 hours. We assess progress every 10 lessons.</p>
+            </div>
+            
+            <div class="pt-4 border-t border-white/10">
+              <h4 class="font-semibold text-white mb-2">Do you pick up from home or work?</h4>
+              <p class="text-white/80 text-sm leading-relaxed">Yes — we pick up from home, work, or any convenient location within our service area (Central London, North London, and surrounding areas).</p>
+            </div>
+            
+            <div class="pt-4 border-t border-white/10">
+              <h4 class="font-semibold text-white mb-2">Is the test fee included?</h4>
+              <p class="text-white/80 text-sm leading-relaxed">Test fees are paid directly to the DVSA (Theory: £23, Practical: £62). Our prices cover tuition and car hire options. We can help you book your test.</p>
+            </div>
+            
+            <div class="pt-4 border-t border-white/10">
+              <h4 class="font-semibold text-white mb-2">Do you offer gift vouchers?</h4>
+              <p class="text-white/80 text-sm leading-relaxed">Yes — contact us and we'll arrange a digital voucher.</p>
+            </div>
+            
+            <div class="pt-4 border-t border-white/10">
+              <h4 class="font-semibold text-white mb-2">What areas do you cover?</h4>
+              <p class="text-white/80 text-sm leading-relaxed">We serve Central London, North London, and surrounding areas including Islington, Camden, Westminster, and parts of Hackney and Haringey.</p>
+            </div>
+            
+            <div class="pt-4 border-t border-white/10">
+              <h4 class="font-semibold text-white mb-2">Do you offer payment plans?</h4>
+              <p class="text-white/80 text-sm leading-relaxed">Yes, we offer flexible payment plans for bundles and intensive courses. Contact us to discuss options that work for your budget.</p>
+            </div>
+          </div>
         </details>
       </div>
     </div>
@@ -743,51 +811,66 @@
       });
     }, observerOptions);
 
-          // Observe all pricing cards
-      document.querySelectorAll('#pricing .lift').forEach(card => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(20px)';
-        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(card);
-      });
+    // Observe all pricing cards
+    document.querySelectorAll('#pricing .lift').forEach(card => {
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(20px)';
+      card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      observer.observe(card);
+    });
 
-      // Mobile menu functionality
-      const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-      const mobileMenu = document.getElementById('mobile-menu');
-      const closeMenuBtn = document.getElementById('close-menu');
-      const menuIcon = document.getElementById('menu-icon');
+    // Mobile menu functionality
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+    const closeMobileMenuBtn = document.getElementById('close-mobile-menu');
+    const menuIcon = document.getElementById('menu-icon');
+    const closeIcon = document.getElementById('close-icon');
+    let isMenuOpen = false;
 
-      function toggleMenu() {
-        const isOpen = mobileMenu.classList.contains('translate-x-0');
-        if (isOpen) {
-          mobileMenu.classList.remove('translate-x-0');
-          mobileMenu.classList.add('translate-x-full');
-          menuIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16"/>';
-        } else {
-          mobileMenu.classList.remove('translate-x-full');
-          mobileMenu.classList.add('translate-x-0');
-          menuIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>';
-        }
+    function openMobileMenu() {
+      isMenuOpen = true;
+      mobileMenuOverlay.classList.remove('hidden');
+      // Small delay to ensure display change before animation
+      setTimeout(() => {
+        mobileMenuOverlay.querySelector('.transform').classList.remove('translate-x-full');
+      }, 10);
+      menuIcon.classList.add('hidden');
+      closeIcon.classList.remove('hidden');
+    }
+
+    function closeMobileMenu() {
+      isMenuOpen = false;
+      mobileMenuOverlay.querySelector('.transform').classList.add('translate-x-full');
+      // Wait for animation to complete before hiding
+      setTimeout(() => {
+        mobileMenuOverlay.classList.add('hidden');
+      }, 300);
+      menuIcon.classList.remove('hidden');
+      closeIcon.classList.add('hidden');
+    }
+
+    // Event listeners
+    mobileMenuBtn.addEventListener('click', openMobileMenu);
+    closeMobileMenuBtn.addEventListener('click', closeMobileMenu);
+
+    // Close menu when clicking on overlay background
+    mobileMenuOverlay.addEventListener('click', function(e) {
+      if (e.target === mobileMenuOverlay) {
+        closeMobileMenu();
       }
+    });
 
-      mobileMenuBtn.addEventListener('click', toggleMenu);
-      closeMenuBtn.addEventListener('click', toggleMenu);
+    // Close menu when clicking on menu items
+    mobileMenuOverlay.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', closeMobileMenu);
+    });
 
-      // Close menu when clicking on a link
-      document.querySelectorAll('#mobile-menu a').forEach(link => {
-        link.addEventListener('click', () => {
-          mobileMenu.classList.remove('translate-x-0');
-          mobileMenu.classList.add('translate-x-full');
-          menuIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16"/>';
-        });
-      });
-
-      // Close mobile menu on escape key
-      document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && mobileMenu.classList.contains('translate-x-0')) {
-          toggleMenu();
-        }
-      });
-    </script>
+    // Close menu on escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && isMenuOpen) {
+        closeMobileMenu();
+      }
+    });
+  </script>
 </body>
 </html>
